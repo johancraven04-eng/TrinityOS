@@ -1,0 +1,45 @@
+name: Build TrinityOS for Raspberry Pi 5
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Check out TrinityOS source
+        uses: actions/checkout@v4
+
+      - name: Build 64-bit Raspberry Pi OS image with TrinityOS
+        id: build
+        uses: usimd/pi-gen-action@v1
+        with:
+          image-name: TrinityOS-Pi5-Preview
+          pi-gen-repository: RPi-Distro/pi-gen
+          pi-gen-version: arm64
+          release: trixie
+          stage-list: stage0 stage1 stage2 stage3 ./stage-trinity stage4
+          compression: xz
+          compression-level: 6
+          increase-runner-disk-size: true
+          enable-cloud-init: 0
+          enable-ssh: 0
+          username: trinity
+          locale: en_US.UTF-8
+          timezone: Asia/Kuwait
+          keyboard-keymap: us
+          keyboard-layout: English (US)
+          wpa-country: KW
+          verbose-output: true
+
+      - name: Upload TrinityOS image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TrinityOS-Pi5-image
+          path: ${{ steps.build.outputs.image-path }}
+          if-no-files-found: error
+          retention-days: 7
