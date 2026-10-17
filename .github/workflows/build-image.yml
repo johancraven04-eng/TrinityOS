@@ -25,7 +25,7 @@ jobs:
           stage-list: stage0 stage1 stage2 stage3 ./stage-trinity stage4
           compression: xz
           compression-level: 6
-          increase-runner-disk-size: true
+          increase-runner-disk-size: false
           enable-cloud-init: 0
           enable-ssh: 0
           username: trinity
