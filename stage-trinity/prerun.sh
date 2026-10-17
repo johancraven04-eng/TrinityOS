@@ -1,2 +1,5 @@
 #!/bin/bash -e
-# Custom TrinityOS stage for pi-gen.
+
+if [ ! -d "${ROOTFS_DIR}" ]; then
+    copy_previous
+fi
