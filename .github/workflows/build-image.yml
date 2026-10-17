@@ -35,11 +35,19 @@ jobs:
           keyboard-layout: English (US)
           wpa-country: KW
           verbose-output: true
+          
+      - name: Generate SHA-256 checksum
+        run: |
+          IMAGE_PATH="${{ steps.build.outputs.image-path }}"
+          sha256sum "$IMAGE_PATH" > SHA256SUMS.txt
+          cat SHA256SUMS.txt
 
       - name: Upload TrinityOS image artifact
         uses: actions/upload-artifact@v4
         with:
           name: TrinityOS-Pi5-image
-          path: ${{ steps.build.outputs.image-path }}
+          path: |
+            ${{ steps.build.outputs.image-path }}
+            SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 7
