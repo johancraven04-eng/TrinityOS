@@ -30,7 +30,7 @@ jobs:
           enable-ssh: 0
           username: trinity
           locale: en_US.UTF-8
-          timezone: Asia/Kuwait
+          timezone: Etc/GMT-3
           keyboard-keymap: us
           keyboard-layout: English (US)
           wpa-country: KW
